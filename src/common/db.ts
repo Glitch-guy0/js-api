@@ -20,7 +20,6 @@ export default async function dbConnect(){
     })
   }catch(error: any){
     console.error("Something went wrong", error.message);
+    process.exit(1)
   }
 }
-
-dbConnect();
