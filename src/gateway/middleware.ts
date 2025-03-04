@@ -6,7 +6,7 @@ import HttpError from '../common/customErrors/HttpError';
 
 dbConnect();
 
-async function ipLog(req: Request){
+export async function ipLog(req: Request){
   const requestIP = req.ip;
   const iplog: IpRequestLogType | null = await IpRequestLog.findOne({ip: requestIP})
   if(!iplog){
@@ -15,7 +15,7 @@ async function ipLog(req: Request){
     })
     return
   }
-  if(iplog.requestCount > 50){
+  if(iplog.requestCount > 10){
     throw new HttpError(403, "Too many requests");
   }
   await IpRequestLog.updateOne({ip: requestIP}, {
