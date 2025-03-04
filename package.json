@@ -16,7 +16,9 @@
   "author": "Glitch-guy0",
   "license": "ISC",
   "dependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.12.0"
   },
