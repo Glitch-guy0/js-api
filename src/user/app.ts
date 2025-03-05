@@ -78,7 +78,16 @@ app.get("/user/dashboard", async (req, res) => {
 })
 
 // /user/update => => uses session key to get user and operate
-
+app.delete("/user", async (req, res) => {
+  try{
+    const user = await Authenticate(req.cookies)
+    await deleteUser(user._id)
+    res.clearCookie("sessionkey")
+    res.json({"message": "User deleted"})
+  }catch(err:any){
+    res.status(err.status).json({"message": err.message})
+  }
+})
 
 app.get("/", (req, res) => {
   res.send("hello world")
