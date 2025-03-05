@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const MONGO_URI = 'mongodb://localhost:27017/js-api'
+const MONGO_URI = 'mongodb://mongodb:27017/js-api'
 export default async function dbConnect(){
   try{
     if(mongoose.connection.readyState === 1){
