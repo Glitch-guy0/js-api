@@ -1,6 +1,6 @@
 import {Request} from 'express'
 import dbConnect from '../common/db';
-import { IpRequestLog, IpRequestLogType } from './models/ipReqeustLog';
+import { IpRequestLog, IpRequestLogType } from '../common/models/ipReqeustLog';
 import HttpError from '../common/customErrors/HttpError';
 import sessionBlocklist from '../common/models/sessionBlocklist';
 
@@ -26,9 +26,12 @@ export async function ipLog(req: Request){
 
 export async function isSessionBlocked(sessionkey: string){
   try{
-    await sessionBlocklist.findOne({sessionkey})
-    return true
+    const session = await sessionBlocklist.findOne({sessionkey})
+    if(session){
+      return true;
+    }
+    return false
   }catch(err:any){
-    return false;
+    return true;
   }
 }
