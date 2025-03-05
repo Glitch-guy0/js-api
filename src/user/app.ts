@@ -92,6 +92,10 @@ app.delete("/user", async (req, res) => {
 app.get("/", (req, res) => {
   res.send("hello world")
 })
+
+app.use((req,res)=>{
+  res.status(404).json({"message": "Not Found"})
+})
 app.listen(port, ()=> {
   console.log("listenting on port: 3000")
   console.log(`http://localhost:${port}`)
