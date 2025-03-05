@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+  application:
+    image: glitchguy0/js-api:latest
+    container_name: application
+    restart: 'no'
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+
   mongodb:
     image: mongodb/mongodb-community-server:latest
     container_name: mongodb
