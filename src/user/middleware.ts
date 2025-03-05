@@ -16,7 +16,7 @@ export async function ipLog(req: Request){
     })
     return
   }
-  if(iplog.requestCount > 10){
+  if(iplog.requestCount > 30){
     throw new HttpError(403, "Too many requests");
   }
   await IpRequestLog.updateOne({ip: requestIP}, {
