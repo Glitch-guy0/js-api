@@ -72,7 +72,18 @@ app.listen(port, ()=> {
 })
 
 
-
+async function Authenticate(cookie: any){
+  try{
+    if(cookie.sessionkey){
+      const userid = decodeSession(cookie.sessionkey)
+      return await getUser(userid)
+    }else{
+      throw new Error('Unauthorized')
+    }
+  }catch(err){
+    throw new HttpError(401, "Unauthorized User")
+  }
+}
 
 
 class Validate{
