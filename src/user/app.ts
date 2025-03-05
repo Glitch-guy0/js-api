@@ -34,9 +34,6 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 app.post("/user", async (req, res) => {
   try {
     const userData = await req.body;
-    if (!userData?.email) {
-      throw new HttpError(400, "Invalid user data");
-    }
     Validate.createUserData(userData);
     const sessionkey = await createUser(req.body);
     res.cookie("sessionkey", sessionkey, { maxAge: 86400, httpOnly: true });
@@ -144,13 +141,16 @@ class Validate {
   }
 
   static createUserData(user: User) {
-    if (user.name.length < 3) {
+    if (!user?.name||user?.name.length < 3) {
       throw new HttpError(
         400,
         "Name Required and must be at least 3 characters"
       );
     }
-    if (!user.password) {
+    if (!user?.email) {
+      throw new HttpError(400, "Invalid user data");
+    }
+    if (!user?.password) {
       throw new HttpError(400, "Password Required");
     }
     Validate.email(user.email);
