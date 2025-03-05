@@ -33,7 +33,25 @@ app.post("/user", async (req, res) => {
   }
 })
 
-
+app.get("/user",async (req, res)=>{
+  try{
+    const cookie = req.cookies
+    if(cookie.sessionkey){
+      const userid = decodeSession(cookie.sessionkey)
+      await getUser(userid)
+      res.send()
+    }else{
+      const data = req.body
+      Validate.loginData(data)
+      const user = await loginUser(data.email, data.password)
+      const sessionkey = generateSession(user)
+      res.cookie("sessionkey", sessionkey, { maxAge: 86400, httpOnly: true })
+      res.send()
+    }
+  }catch(err:any){
+    res.status(err.status).json({"message": err.message})
+  }
+})
 
 
 // logout
