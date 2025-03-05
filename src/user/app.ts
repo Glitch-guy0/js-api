@@ -18,7 +18,20 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 
-
+app.post("/user", async (req, res) => {
+  try{
+    const userData = await req.body
+    if(!userData?.email){
+      throw new HttpError(400, "Invalid user data")
+    }
+    Validate.createUserData(userData)
+    const sessionkey = await createUser(req.body)
+    res.cookie("sessionkey", sessionkey, { maxAge: 86400, httpOnly: true })
+    res.json({"message": "User created"})
+  }catch(err: any){
+    res.status(err.status).json({"message": err.message})
+  }
+})
 
 
 
