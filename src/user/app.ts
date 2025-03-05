@@ -11,7 +11,7 @@ import { ipLog, isSessionBlocked } from "./middleware";
 dbConnect();
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
