@@ -68,7 +68,14 @@ app.post("/logout", async (req, res) => {
 })
 // private routes
 
-
+app.get("/user/dashboard", async (req, res) => {
+  try{
+    const user = await Authenticate(req.cookies)
+    res.json(user)
+  }catch(err:any){
+    res.status(err.status).json({"message": err.message})
+  }
+})
 
 // /user/update => => uses session key to get user and operate
 
