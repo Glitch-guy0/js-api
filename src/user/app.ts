@@ -55,7 +55,17 @@ app.get("/user",async (req, res)=>{
 
 
 // logout
-
+app.post("/logout", async (req, res) => {
+  try{
+    if(req.cookies.sessionkey){
+      await sessionBlocklist.create({sessionkey: req.cookies.sessionkey})
+      res.clearCookie("sessionkey")
+    }
+    res.json({"message": "Logged out"})
+  }catch(err:any){
+    res.status(500).json({"message": "Logged out"})
+  }
+})
 // private routes
 
 
